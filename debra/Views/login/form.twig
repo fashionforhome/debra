@@ -1,0 +1,26 @@
+{% extends "layout.twig" %}
+
+{% block topic %}
+    Login
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-6 col-md-offset-3">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="login-username" value="{{ username }}">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="login-password">
+        </div>
+        <a id="login" class="btn btn-default btn-success"
+           data-request-url="{{ app.url_generator.generate('login') }}"
+           data-redirect-url="{{ app.url_generator.generate('overview') }}"
+                >Login</a>
+
+    </div>
+
+{% endblock %}

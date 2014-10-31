@@ -1,0 +1,17 @@
+{
+	"php": ">=5.3.3",
+	"require": {
+		"silex/silex": "1.2.2",
+		"twig/twig": "1.16.2",
+		"monolog/monolog": ">=1.0.0",
+		"guzzlehttp/guzzle": "3.8.1",
+		"phpunit/phpunit": "4.3.4"
+	},
+	"autoload": {
+		"psr-4": {"Debra\\": "debra/"}
+	},
+	"post-install-cmd": [
+		"chmod 777 storage/logs",
+		"chmod 777 storage/git"
+	]
+}

@@ -1,0 +1,67 @@
+<table id="issue-table" class="table table-condensed table-striped table-bordered tablesorter">
+
+    <thead>
+        <tr>
+            <th>Branch</th>
+            <th>Sprint</th>
+            <th>Status</th>
+            <th>Fixed Version</th>
+            <th>Last Updated</th>
+            <th>Summary</th>
+            {% if selection is iterable %}
+                <th></th>
+            {% endif %}
+        </tr>
+    </thead>
+
+    <tfoot>
+        <tr>
+            <th>Branch</th>
+            <th>Sprint</th>
+            <th>Status</th>
+            <th>Fixed Version</th>
+            <th>Last Updated</th>
+            <th>Summary</th>
+            {% if selection is iterable %}
+                <th><input type="checkbox" id="select-all"></th>
+            {% endif %}
+        </tr>
+    </tfoot>
+
+    <tbody>
+        {% for issue in issues %}
+            <tr>
+                <td>
+                    {% if issue.url is not empty %}
+                        <a href="{{ issue.url }}" target="_blank">{{ issue.branch }}</a>
+                    {% else %}
+                        {{ issue.branch }}
+                    {% endif %}
+                </td>
+                <td>{{ issue.sprint }}</td>
+
+                {% if issue.status == 'Closed' %}
+                    <td class="text-center success">{{ issue.status }}</td>
+                {% elseif issue.status == '' %}
+                    <td class="text-center"></td>
+                {% else %}
+                    <td class="text-center danger">{{ issue.status }}</td>
+                {% endif %}
+
+                <td>{{ issue.fixed_version }}</td>
+                <td class="text-right">{{ issue.last_updated }}</td>
+                <td>{{ issue.summary }}</td>
+                {% if selection is iterable %}
+                    <td class="text-center">
+                        <input type="checkbox" name="issues[]" value="{{ issue.branch }}"
+                                {% if issue.branch in selection %}
+                                    checked
+                                {% endif %}
+                                >
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>

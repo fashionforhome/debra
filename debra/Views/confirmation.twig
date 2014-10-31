@@ -1,0 +1,21 @@
+{% extends "layout.twig" %}
+
+{% block topic %}
+    Confirmation
+{% endblock %}
+
+{% block content %}
+
+    <form role="form" method="POST" action="{{ app.url_generator.generate('delete.branches') }}">
+        <div class="col-md-12">
+
+            {% include 'issue/table.twig' with {'issues': issues, 'selection': false} %}
+
+        </div>
+        <div class="col-md-12 text-right">
+            <a href="{{ app.url_generator.generate('overview') }}?old=1" class="btn btn-sm btn-default">No, back to overview</a>
+            <input type="submit" class="btn btn-sm btn-danger" value="yes">
+        </div>
+    </form>
+
+{% endblock %}

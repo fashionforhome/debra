@@ -1,0 +1,18 @@
+{% extends "layout.twig" %}
+
+{% block topic %}
+    Report
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-12">
+
+        {% include 'issue/table.twig' with {'issues': issues, 'selection': false} %}
+
+    </div>
+    <div class="col-md-12 text-right">
+        <a href="{{ app.url_generator.generate('overview') }}?old=1" class="btn btn-sm btn-default">Back to overview</a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+html {
+	padding-top: 70px;
+	padding-bottom: 50px;
+}
+
+table {
+	font-size: 12px;
+}
+
+table th {
+	text-align: center;
+}
+
+.status-cell-closed {
+	background-color: #00ff51;
+}
+.table-striped > tbody > tr:nth-child(odd) > td.status-cell-closed {
+	background-color: #00d443 !important;
+}
+
+#issue-table .tablesorter-filter {
+	background-color: #fff;
+}
+
+#issue-table .tablesorter-filter input {
+	border: 1px solid #ccc;
+	width: 100%;
+}
+
+#issue-table input[type=checkbox] {
+	cursor: pointer;
+}
+
+.tablesorter-filter.disabled {
+	display: none;
+}
+
+#empty-session-cache {
+	cursor: pointer;
+}
