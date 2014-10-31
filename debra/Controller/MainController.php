@@ -149,7 +149,7 @@ class MainController extends BaseController
 	public function getConfirmation()
 	{
 		$selectedBranches = $this->app['cache']->get('issues_selection');
-		$issueCollection = $this->app['cache']->get('issues_all')->setApp($this->app);
+		$issueCollection = $this->app['cache']->get('issues_all');
 
 		$issueCollection->filter(array(
 			'branch' => $selectedBranches
@@ -169,7 +169,7 @@ class MainController extends BaseController
 	{
 		// get issues of deleted branches
 		$selectedBranches = $this->app['cache']->get('issues_selection');
-		$collection = $this->app['cache']->get('issues_all')->setApp($this->app);
+		$collection = $this->app['cache']->get('issues_all');
 
 		// delete branches
 		$collection->filter(array(
@@ -201,7 +201,7 @@ class MainController extends BaseController
 			'issues' => $this->app['cache']->get(
 					'issues_deleted',
 					$this->app['model.issue.collection']
-			)->setApp($this->app)->toArray()
+			)->toArray()
 		));
 	}
 
@@ -214,7 +214,7 @@ class MainController extends BaseController
 	protected function getIssueCollection($force = false)
 	{
 		if ($force === false && $this->app['cache']->has('issues_all')) {
-			return $issueCollection = $this->app['cache']->get('issues_all')->setApp($this->app);
+			return $issueCollection = $this->app['cache']->get('issues_all');
 		}
 
 		// load issue collection
