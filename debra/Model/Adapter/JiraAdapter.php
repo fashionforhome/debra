@@ -88,6 +88,11 @@ class JiraAdapter
 	 */
 	public function getIssuesByKeys($keyList = array())
 	{
+		// if no keys given
+		if (empty($keyList)) {
+			return array();
+		}
+
 		// build request for given issue keys
 		$req = $this->client->post($this->buildUrl("search"), array(), json_encode(array(
 			'jql'           => 'key IN ('.implode(",", $keyList).')',
