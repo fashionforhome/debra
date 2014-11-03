@@ -125,12 +125,11 @@ class MainController extends BaseController
 		$stats = array();
 		for ($i = 0; $i < $issueCollection->count(); $i++) {
 			$issue = $issueCollection->at($i);
-			$teamString = preg_match("/(-[0-9]+)/mi", "", $issue->getData('branch'));
+			$teamString = preg_replace("/(-[0-9]+)/mi", "", $issue->getData('branch'));
 			if (isset($stats[$teamString]) === false) {
-				$stats[$teamString] = 0;
+				$stats[$teamString] = array('name' => $teamString, 'count' => 0);
 			}
-
-			$stats[$teamString]++;
+			$stats[$teamString]['count']++;
 		}
 
 		// render the overview templte
