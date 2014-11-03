@@ -1,6 +1,6 @@
 <?php namespace Debra\Controller;
 
-use Debra\Model\IssueCollection;
+use Debra\Model\Entity\IssueCollection;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -46,7 +46,7 @@ class MainController extends BaseController
 	public function getEmptySessionCache()
 	{
 		$this->emptyCache();
-		$this->app['cache']->set('issues_all', $this->getIssueCollection());
+		$this->setAllIssues($this->getIssueCollection());
 
 		return true;
 	}
@@ -83,7 +83,7 @@ class MainController extends BaseController
 			// load the issue data and cache them
 			$this->emptyCache();
 
-			$this->app['cache']->set('issues_all', $this->getIssueCollection());
+			$this->setAllIssues($this->getIssueCollection());
 		}
 
 		return true;
@@ -115,11 +115,11 @@ class MainController extends BaseController
 		// if there is a selection forced fetch the data from the session
 		$selectedBranches = array();
 		if ($request->get('old') == true) {
-			$selectedBranches = $this->app['cache']->get('issues_selection', array());
+			$selectedBranches = $this->getSelectedBranches();
 		}
 
 		// save the fetched issues to session
-		$this->app['cache']->set('issues_all', $issueCollection);
+		$this->setAllIssues($issueCollection);
 
 		// render the overview templte
 		return $this->app['twig']->render('overview.twig', array(
@@ -134,7 +134,7 @@ class MainController extends BaseController
 	 */
 	public function postSaveSelection(Request $request)
 	{
-		$this->app['cache']->set('issues_selection', $request->get('issues'));
+		$this->setSelectedBranches($request->get('issues'));
 
 		return $this->app->redirect(
 			$this->app['url_generator']->generate('confirmation')
@@ -148,16 +148,75 @@ class MainController extends BaseController
 	 */
 	public function getConfirmation()
 	{
-		$selectedBranches = $this->app['cache']->get('issues_selection');
-		$issueCollection = $this->app['cache']->get('issues_all');
-
-		$issueCollection->filter(array(
+		$selectedBranches = $this->getSelectedBranches();
+		$issueCollection = $this->getAllIssues()->filter(array(
 			'branch' => $selectedBranches
 		));
 
 		return $this->app['twig']->render('confirmation.twig', array(
 			'issues' => $issueCollection->toArray()
 		));
+	}
+
+	/**
+	 * @return array[]
+	 */
+	private function getSelectedBranches()
+	{
+		return json_decode($this->app['cache']->get('issues_selection'), array());
+	}
+
+	/**
+	 * @param string[] $branches
+	 * @return $this
+	 */
+	private function setSelectedBranches($branches)
+	{
+		$this->app['cache']->set('issues_selection', json_encode($branches));
+
+		return $this;
+	}
+
+	/**
+	 * @return IssueCollection
+	 */
+	private function getAllIssues()
+	{
+		return $this->app['model.issue.collection']->fromString(
+			$this->app['cache']->get('issues_all')
+		);
+	}
+
+	/**
+	 * @param IssueCollection $collection
+	 * @return $this
+	 */
+	private function setAllIssues(IssueCollection $collection)
+	{
+		$this->app['cache']->set('issues_all', $collection->toString());
+
+		return $this;
+	}
+
+	/**
+	 * @return IssueCollection
+	 */
+	private function getDeletedIssues()
+	{
+		return $this->app['model.issue.collection']->fromString(
+			$this->app['cache']->get('issues_deleted')
+		);
+	}
+
+	/**
+	 * @param IssueCollection $collection
+	 * @return $this
+	 */
+	private function setDeletedIssues(IssueCollection $collection)
+	{
+		$this->app['cache']->set('issues_deleted', $collection->toString());
+
+		return $this;
 	}
 
 	/**
@@ -168,8 +227,8 @@ class MainController extends BaseController
 	public function deleteSelectedBranches()
 	{
 		// get issues of deleted branches
-		$selectedBranches = $this->app['cache']->get('issues_selection');
-		$collection = $this->app['cache']->get('issues_all');
+		$selectedBranches = $this->getSelectedBranches();
+		$collection = $this->getAllIssues();
 
 		// delete branches
 		$collection->filter(array(
@@ -180,7 +239,7 @@ class MainController extends BaseController
 		$this->app['monolog.user']->addInfo($this->app['session']->get('user') . ' deleted branches: ' . implode(", ", $selectedBranches));
 
 		// set deleted issues
-		$this->app['cache']->set('issues_deleted', $collection);
+		$this->setDeletedIssues($collection);
 
 		// truncate the session cache so new branches und jira issues will be fetched
 		$this->emptyCache();
@@ -214,7 +273,7 @@ class MainController extends BaseController
 	protected function getIssueCollection($force = false)
 	{
 		if ($force === false && $this->app['cache']->has('issues_all')) {
-			return $issueCollection = $this->app['cache']->get('issues_all');
+			return $issueCollection = $this->getAllIssues();
 		}
 
 		// load issue collection

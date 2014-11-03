@@ -8,7 +8,7 @@ use Silex\Application;
  * Class AbstractModel
  * @package Debra\Model
  */
-abstract class AbstractModel extends AbstractObject implements \Serializable
+abstract class AbstractModel extends AbstractObject
 {
 	/**
 	 * @var mixed[]
@@ -59,27 +59,21 @@ abstract class AbstractModel extends AbstractObject implements \Serializable
 	}
 
 	/**
-	 * (PHP 5 &gt;= 5.1.0)<br/>
-	 * String representation of object
-	 * @link http://php.net/manual/en/serializable.serialize.php
-	 * @return string the string representation of the object or null
+	 * @return string
 	 */
-	public function serialize()
+	public function toString()
 	{
 		return serialize($this->data);
 	}
 
 	/**
-	 * (PHP 5 &gt;= 5.1.0)<br/>
-	 * Constructs the object
-	 * @link http://php.net/manual/en/serializable.unserialize.php
-	 * @param string $serialized <p>
-	 * The string representation of the object.
-	 * </p>
-	 * @return void
+	 * @param $string
+	 * @return $this
 	 */
-	public function unserialize($serialized)
+	public function fromString($string)
 	{
-		$this->data = unserialize($serialized);
+		$this->data = unserialize($string);
+
+		return $this;
 	}
 }

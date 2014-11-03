@@ -7,7 +7,7 @@ use Silex\Application;
  * Class AbstractCollection
  * @package Debra\Model
  */
-abstract class AbstractCollection extends AbstractObject implements \Countable, \Serializable
+abstract class AbstractCollection extends AbstractObject implements \Countable
 {
 	/**
 	 * @var AbstractModel[]
@@ -133,36 +133,21 @@ abstract class AbstractCollection extends AbstractObject implements \Countable, 
 	}
 
 	/**
-	 * (PHP 5 &gt;= 5.1.0)<br/>
-	 * String representation of object
-	 * @link http://php.net/manual/en/serializable.serialize.php
-	 * @return string the string representation of the object or null
+	 * @return string
 	 */
-	public function serialize()
+	public function toString()
 	{
 		$models = array();
 		foreach ($this->models as $model) {
-			$models[] = serialize($model);
+			$models[] = $model->toString();
 		}
 
-		return json_encode($models);
+		return serialize($models);
 	}
 
 	/**
-	 * (PHP 5 &gt;= 5.1.0)<br/>
-	 * Constructs the object
-	 * @link http://php.net/manual/en/serializable.unserialize.php
-	 * @param string $serialized <p>
-	 * The string representation of the object.
-	 * </p>
-	 * @return void
+	 * @param $string
+	 * @return $this
 	 */
-	public function unserialize($serialized)
-	{
-		$this->models = array();
-		$models = json_decode($serialized);
-		foreach ($models as $model) {
-			$this->models[] = unserialize($model);
-		}
-	}
+	abstract public function fromString($string);
 }

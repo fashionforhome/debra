@@ -31,7 +31,7 @@ class CacheHelper
 	 */
 	public function set($key, $val)
 	{
-		$this->session->set($key, serialize($val));
+		$this->session->set($key, $val);
 
 		return $this;
 	}
@@ -44,7 +44,7 @@ class CacheHelper
 	public function get($key, $default = null)
 	{
 		if ($this->session->has($key)) {
-			return unserialize($this->session->get($key));
+			return $this->session->get($key);
 		}
 
 		return $default;

@@ -97,4 +97,18 @@ class IssueCollection extends AbstractCollection
 
 		return $this;
 	}
+
+	/**
+	 * @param $string
+	 * @return $this
+	 */
+	public function fromString($string)
+	{
+		$modelStrings = json_decode($string);
+		foreach ($modelStrings as $modelString) {
+			$this->add($this->app['model.issue']->fromString($modelString));
+		}
+
+		return $this;
+	}
 }

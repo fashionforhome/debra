@@ -22,15 +22,4 @@ abstract class AbstractObject
 	{
 		$this->app = $app;
 	}
-
-	/**
-	 * @param Application $app
-	 * @return $this
-	 */
-	public function setApp(Application $app)
-	{
-		$this->app = $app;
-
-		return $this;
-	}
 }
