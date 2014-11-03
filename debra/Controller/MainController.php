@@ -163,7 +163,7 @@ class MainController extends BaseController
 	 */
 	private function getSelectedBranches()
 	{
-		return json_decode($this->app['cache']->get('issues_selection'), array());
+		return json_decode($this->app['cache']->get('issues_selection', json_encode(array())));
 	}
 
 	/**
@@ -257,10 +257,7 @@ class MainController extends BaseController
 	public function getReport()
 	{
 		return $this->app['twig']->render('report.twig', array(
-			'issues' => $this->app['cache']->get(
-					'issues_deleted',
-					$this->app['model.issue.collection']
-			)->toArray()
+			'issues' => $this->getDeletedIssues()->toArray()
 		));
 	}
 

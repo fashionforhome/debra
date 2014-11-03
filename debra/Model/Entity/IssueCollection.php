@@ -104,7 +104,7 @@ class IssueCollection extends AbstractCollection
 	 */
 	public function fromString($string)
 	{
-		$modelStrings = json_decode($string);
+		$modelStrings = unserialize($string);
 		foreach ($modelStrings as $modelString) {
 			$this->add($this->app['model.issue']->fromString($modelString));
 		}
