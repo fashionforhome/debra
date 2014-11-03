@@ -9,9 +9,5 @@
 	},
 	"autoload": {
 		"psr-4": {"Debra\\": "debra/"}
-	},
-	"post-install-cmd": [
-		"chmod 777 storage/logs",
-		"chmod 777 storage/git"
-	]
+	}
 }

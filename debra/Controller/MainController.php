@@ -121,10 +121,23 @@ class MainController extends BaseController
 		// save the fetched issues to session
 		$this->setAllIssues($issueCollection);
 
+		// get team overview for teams
+		$stats = array();
+		for ($i = 0; $i < $issueCollection->count(); $i++) {
+			$issue = $issueCollection->at($i);
+			$teamString = preg_match("/(-[0-9]+)/mi", "", $issue->getData('branch'));
+			if (isset($stats[$teamString]) === false) {
+				$stats[$teamString] = 0;
+			}
+
+			$stats[$teamString]++;
+		}
+
 		// render the overview templte
 		return $this->app['twig']->render('overview.twig', array(
 			'issues'                => $issueCollection->toArray(),
-			'selected_branches'     => $selectedBranches
+			'selected_branches'     => $selectedBranches,
+			'stats'                 => $stats
 		));
 	}
 

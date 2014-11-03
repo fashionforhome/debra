@@ -6,15 +6,60 @@
 
 {% block content %}
 
-    <form role="form" method="POST" action="{{ app.url_generator.generate('select.branches') }}">
-        <div class="col-md-12">
 
-            {% include 'issue/table.twig' with {'issues': issues, 'selection': selected_branches} %}
+    <div class="panel-group" id="accordion-information" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Table of branch information
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
 
+
+                    <form role="form" method="POST" action="{{ app.url_generator.generate('select.branches') }}">
+                        <div class="col-md-12">
+
+                            {% include 'issue/table.twig' with {'issues': issues, 'selection': selected_branches} %}
+
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <input type="submit" class="btn btn-sm btn-danger" value="delete">
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
         </div>
-        <div class="col-md-12 text-right">
-            <input type="submit" class="btn btn-sm btn-danger" value="delete">
+    </div>
+
+
+    <div class="panel-group" id="accordion-stats" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Branch statistics
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+
+                    {% for name in stats %}
+                        <div class="col-md-2">
+                            <div><span class="badge">{{ loop.index }}</span>{{ name }}</div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
+
 
 {% endblock %}
