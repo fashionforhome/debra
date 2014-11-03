@@ -40,11 +40,12 @@ class IssueCollectionTest extends PHPUnit_Framework_TestCase
 	{
 		$issue = $this->getMockBuilder('\\Debra\\Model\\Entity\\Issue')
 			->disableOriginalConstructor()
-			->setMethods(array('getBranch'))
+			->setMethods(array('getData'))
 			->getMock();
 
 		$issue->expects($this->once())
-			->method('getBranch')
+			->method('getData')
+			->with($this->equalTo('branch'))
 			->will($this->returnValue($branchName));
 
 		return $issue;

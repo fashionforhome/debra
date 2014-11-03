@@ -31,7 +31,6 @@ class GitAdapterTest extends PHPUnit_Framework_TestCase
 			->method('run')
 			->with($this->equalTo($expectedCmd));
 
-
 		$adapter->deleteRemoteBranches(array(
 			'branch-1', 'branch-2', 'branch-3'
 		));
