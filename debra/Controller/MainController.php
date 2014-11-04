@@ -132,11 +132,30 @@ class MainController extends BaseController
 			$stats[$teamString]['count']++;
 		}
 
+		// sort for 6 columns
+		usort($stats, function($a, $b) {
+				if (strcmp($a['name'], $b['name']) > 0) {
+					return 1;
+				} elseif (strcmp($a['name'], $b['name']) > 0) {
+					return -1;
+				}
+				return 0;
+		});
+
+		$columns = 6;
+		$statsSorted = array();
+		for ($i = 0; $i < count($stats); $i++) {
+			if (isset($statsSorted[$i%$columns]) === false) {
+				$statsSorted[$i%$columns] = array();
+			}
+			$statsSorted[$i%$columns][] = $stats[$i];
+		}
+
 		// render the overview templte
 		return $this->app['twig']->render('overview.twig', array(
 			'issues'                => $issueCollection->toArray(),
 			'selected_branches'     => $selectedBranches,
-			'stats'                 => $stats
+			'stats'                 => $statsSorted
 		));
 	}
 

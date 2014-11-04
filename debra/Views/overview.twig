@@ -50,9 +50,11 @@
             <div id="brach-stats" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
 
-                    {% for row in stats %}
+                    {% for statsSet in stats %}
                         <div class="col-md-2">
-                            <div><span class="label label-primary">{{ row.count }}</span> {{ row.name }}</div>
+                            {% for row in statsSet %}
+                                <div><span class="label label-primary">{{ row.count }}</span> {{ row.name }}</div><br>
+                            {% endfor %}
                         </div>
                     {% endfor %}
 
