@@ -1,13 +1,30 @@
 {
+	"name": "Debra",
+	"description": "Git branch management tool",
+	"authors": [
+		{
+			"name": "Eduard Bess",
+			"email": "eduard.bess@fashionforhome.de"
+		}
+	],
+	"autoload": {
+		"psr-4": {"Debra\\": "debra/"}
+	},
 	"php": ">=5.3.3",
 	"require": {
 		"silex/silex": "1.2.2",
 		"twig/twig": "1.16.2",
 		"monolog/monolog": ">=1.0.0",
-		"guzzlehttp/guzzle": "3.8.1",
+		"guzzlehttp/guzzle": "3.8.1"
+	},
+	"require-dev": {
 		"phpunit/phpunit": "4.3.4"
 	},
-	"autoload": {
-		"psr-4": {"Debra\\": "debra/"}
+	"scripts": {
+		"post-install-cmd": [
+			"chmod 777 storage",
+			"chmod 777 storage/logs",
+			"chmod 777 storage/git"
+		]
 	}
 }
