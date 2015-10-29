@@ -1,5 +1,9 @@
+/*
+ Debra branch management tool
+ (C) Copyright 2015 fashion4home GmbH <www.fashionforhome.de>, Author Eduard Bess <eduard.bess@fashion4home.de>
 
-
+ license GPL-3.0
+*/
 $(function(){
 
 	$('#issue-table').tablesorter({
