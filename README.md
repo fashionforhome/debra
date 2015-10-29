@@ -2,6 +2,7 @@ Debra
 -----
 
 A webbased tool to organize your git developers branches.
+
 (C) Copyright 2015 by fashion4home GmbH, Author Eduard Bess
 
 Contact: administrator@fashionforhome.de
