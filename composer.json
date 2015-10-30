@@ -1,6 +1,7 @@
 {
 	"name": "fashionforhome/debra",
 	"description": "Git branch management tool",
+	"license": "GPL-3.0",
 	"authors": [
 		{
 			"name": "Eduard Bess",
