@@ -15,9 +15,9 @@ return array(
 	 * setup for git repository
 	 */
 	'git' => array(
-		'url'           => "https://f4hautouser:DOza2bKTMkbvEUFC9Ndsx6U@bitbucket.org/fashion4home/test_repo_tool_debra.git",
-		'username'      => 'f4hautouser',
-		'password'      => 'DOza2bKTMkbvEUFC9Ndsx6U',
+		'url'           => "https://[USER]:[HASH]@bitbucket.org/fashion4home/test_repo_tool_debra.git",
+		'username'      => '',
+		'password'      => '',
 		'git_path'      => 'git',
 		'git_repo_path' => __DIR__ . '/../storage/git'
 	),
@@ -26,9 +26,9 @@ return array(
 	 * jira restful api
 	 */
 	'jira' => array(
-		'url' => 'https://fashion4home.jira.com/',
-		'username' => 'ticketprinter',
-		'password' => 'j0fd8wfej333',
+		'url' => 'https://[COMPANY].jira.com/',
+		'username' => '',
+		'password' => '',
 	),
 
 	/**
