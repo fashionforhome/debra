@@ -2,3 +2,4 @@ vendor
 /storage/logs/*
 /storage/git/*
 composer.lock
+configs/app.php
